@@ -41,8 +41,4 @@ public class Usuario {
 	@NotNull(message = "O papel do usuário é obrigatório. ")
 	private Role role;
 	
-	@Column(name = "auth_token")
-	@NotBlank(message = "O token de autenticação é obrigatório. ")
-	private String authToken;
-
 }
