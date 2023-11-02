@@ -40,12 +40,6 @@ public class Main {
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
-			Cliente cliente = new Cliente();
-			cliente.setNome("Kauan Mello");
-			cliente.setSexo(Sexo.M);
-			cliente.setDataDeNascimento(Date.valueOf("2005-08-26"));
-			cliente.setUsuario(usuarioService.buscarPor(2));
-			System.out.println(clienteService.salvar(cliente));
 		};
 	}
 }
