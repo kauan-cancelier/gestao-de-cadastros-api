@@ -5,6 +5,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
@@ -21,9 +23,9 @@ public class Usuario {
 	
 	@Id
 	@Column(name = "id")
-	@NotNull(message = "O id é obrigatório. ")
 	@Positive
 	@EqualsAndHashCode.Include
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
 	@Column(name = "email")
@@ -39,8 +41,4 @@ public class Usuario {
 	@NotNull(message = "O papel do usuário é obrigatório. ")
 	private Role role;
 	
-	@Column(name = "auth_token")
-	@NotBlank(message = "O token de autenticação é obrigatório. ")
-	private String authToken;
-
 }

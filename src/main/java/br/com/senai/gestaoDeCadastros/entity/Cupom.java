@@ -1,6 +1,6 @@
 package br.com.senai.gestaoDeCadastros.entity;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 import br.com.senai.gestaoDeCadastros.entity.enums.Status;
 import jakarta.persistence.Column;
@@ -26,14 +26,14 @@ public class Cupom {
 	@EqualsAndHashCode.Include
 	private Integer id;
 	
-	@Column(name = "percentual_desconto")
+	@Column(name = "porcentagem")
 	@NotNull(message = "O percentual de desconto é obrigatório. ")
 	@Positive(message = "O percentual de desconto deve ser positivo. ")
 	private Double percentualDeDesconto;
 	
 	@Column(name = "validade")
 	@NotNull(message = "A validade é obrigatória. ")
-	private Timestamp validade;
+	private Date validade;
 	
 	@Column(name = "codigo")
 	@NotNull(message = "O código é obrigatório. ")
