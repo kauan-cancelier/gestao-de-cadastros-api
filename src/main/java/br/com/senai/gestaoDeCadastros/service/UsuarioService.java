@@ -1,7 +1,7 @@
 package br.com.senai.gestaoDeCadastros.service;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 
 import br.com.senai.gestaoDeCadastros.entity.Usuario;
@@ -19,9 +19,10 @@ public interface UsuarioService {
 			@NotNull(message = "O id é obrigatório para exclusão. ")
 			Integer id);
 	
-	public List<Usuario> listarPor(
+	public Page<Usuario> listarPor(
 			@NotNull(message = "O papel é obrigatório para listagem. ")
-			Role role);
+			Role role, 
+			Pageable pageable);
 
 	public Usuario buscarPor(
 			@NotNull(message = "O email é obrigatório para busca de usuário. ")
