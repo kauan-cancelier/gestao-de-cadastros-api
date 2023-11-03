@@ -50,4 +50,11 @@ public class UsuarioController {
 		return ResponseEntity.ok(converter.toJsonMap(usuarioService.salvar(usuario)));
 	}
 	
+	@Transactional
+	@DeleteMapping("/id/{id}")
+	public ResponseEntity<?> excluirPor(@PathVariable("id") Integer id) {
+		return ResponseEntity.ok(converter.toJsonMap(usuarioService.removerPor(id)));
+	}
+	
+	
 }
