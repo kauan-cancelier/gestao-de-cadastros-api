@@ -24,6 +24,7 @@ public class ClienteServiceImpl implements ClienteService {
 	public Cliente salvar(Cliente cliente) {
 		Preconditions.checkNotNull(cliente, "O cliente é obrigatório para salvar. ");
 		Preconditions.checkArgument(repository.buscarPorIdDoUsuario(cliente.getUsuario().getId()) == null, "O usuário já está em uso. ");
+		Preconditions.checkNotNull(usuariosRepository.buscarPor(cliente.getUsuario().getId()), "O usuário informado não existe. ");
 		return repository.save(cliente);
 	}
 
