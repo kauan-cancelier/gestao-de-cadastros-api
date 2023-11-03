@@ -2,6 +2,8 @@ package br.com.senai.gestaoDeCadastros.entity;
 
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.senai.gestaoDeCadastros.entity.enums.Sexo;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,6 +16,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -49,6 +52,12 @@ public class Cliente {
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_usuario", referencedColumnName = "id")
 	private Usuario usuario;
+	
+	@JsonIgnore
+	@Transient
+	public boolean isPersistido() {
+		return getId() != null && getId() > 0;
+	}
 	
 }
 
