@@ -1,5 +1,7 @@
 package br.com.senai.gestaoDeCadastros.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.senai.gestaoDeCadastros.entity.enums.Role;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,6 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -40,5 +43,11 @@ public class Usuario {
 	@Enumerated(EnumType.STRING)
 	@NotNull(message = "O papel do usuário é obrigatório. ")
 	private Role role;
+	
+	@JsonIgnore
+	@Transient
+	public boolean isPersistido() {
+		return getId() != null && getId() > 0;
+	}
 	
 }

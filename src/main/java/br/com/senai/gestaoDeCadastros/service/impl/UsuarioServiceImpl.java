@@ -1,8 +1,8 @@
 package br.com.senai.gestaoDeCadastros.service.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.google.common.base.Preconditions;
@@ -36,9 +36,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 
 	@Override
-	public List<Usuario> listarPor(Role role) {
+	public Page<Usuario> listarPor(Role role, Pageable pageable) {
 		Preconditions.checkNotNull(role, "O papel do usuário é obrigatório para listagem. ");
-		return repository.listarPor(role);
+		return repository.listarPor(role, pageable);
 	}
 
 	@Override
