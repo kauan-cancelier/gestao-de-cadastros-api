@@ -22,7 +22,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Override
 	public Usuario salvar(Usuario usuario) {
 		Preconditions.checkNotNull(usuario, "O usuário é obrigatório para salvar. ");
-		EmailValidator.isValid(usuario.getEmail());
+		if (usuario.getId() != null) {
+			Preconditions.checkNotNull(repository.buscarPor(usuario.getId()), "Nenhum usuário encontrado com esse id. ");
+		}
 		validarEmailPersistido(usuario.getEmail());
 		return repository.save(usuario);
 	}
@@ -56,6 +58,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 	
 	private void validarEmailPersistido(String email) {
+		EmailValidator.isValid(email);
 	    if (buscarPor(email) != null) {
 	        throw new IllegalArgumentException("Esse email já está salvo.");
 	    }
