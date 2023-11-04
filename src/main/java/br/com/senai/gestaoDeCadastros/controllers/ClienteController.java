@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,6 +44,16 @@ public class ClienteController {
 	@DeleteMapping("/id/{id}")
 	public ResponseEntity<?> excluirPor(@PathVariable("id") Integer id) {
 		return ResponseEntity.ok(converter.toJsonMap(clienteService.removerPor(id)));
+	}
+	
+	@PutMapping
+	public ResponseEntity<?> alterar(@RequestBody Cliente cliente) {
+		Preconditions.checkArgument(cliente.isPersistido(), "O cliente deve possuir id para alteração");
+		if (cliente.getUsuario() != null) {
+			throw new IllegalArgumentException("O usuário não pode ser alterado.");
+		}
+		cliente.setUsuario(clienteService.buscarPor(cliente.getId()).getUsuario());
+		return ResponseEntity.ok(converter.toJsonMap(clienteService.salvar(cliente)));
 	}
 	
 }
