@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Bean;
 
 import com.fasterxml.jackson.datatype.hibernate5.jakarta.Hibernate5JakartaModule;
 
+import br.com.senai.gestaoDeCadastros.entity.Usuario;
+import br.com.senai.gestaoDeCadastros.entity.enums.Role;
 import br.com.senai.gestaoDeCadastros.service.ClienteService;
 import br.com.senai.gestaoDeCadastros.service.UsuarioService;
 
@@ -36,6 +38,11 @@ public class Main {
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
+			Usuario usuario = new Usuario();
+			usuario.setEmail("kauanm@gmail.com");
+			usuario.setRole(Role.Administrador);
+			usuario.setSenha("123456a");
+			usuarioService.salvar(usuario);
 			System.out.println("Running!!!");
 		};
 	}

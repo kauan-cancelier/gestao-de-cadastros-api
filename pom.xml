@@ -17,6 +17,7 @@
 	<guava.version>32.1.2-jre</guava.version>	
 	<org-json.version>20200518</org-json.version>
 	<apache-camel.version>4.0.0-M3</apache-camel.version>
+	<jjwt.version>0.11.5</jjwt.version>
   </properties>
   
   <dependencies>
@@ -50,9 +51,15 @@
 	</dependency>
 	
 	<dependency>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-starter-security</artifactId>
+	</dependency>
+	
+	<dependency>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-web</artifactId>
 	</dependency>	
+	
 	
 	<dependency>
 	    <groupId>org.postgresql</groupId>
@@ -100,6 +107,24 @@
 		<version>${apache-camel.version}</version>
 	</dependency>
 	
+    <dependency>
+        <groupId>io.jsonwebtoken</groupId>
+        <artifactId>jjwt-api</artifactId>
+        <version>${jjwt.version}</version>
+    </dependency>
+    
+    <dependency>
+       <groupId>io.jsonwebtoken</groupId>
+       <artifactId>jjwt-impl</artifactId>
+       <version>${jjwt.version}</version>
+    </dependency>
+    
+    <dependency>   
+       <groupId>io.jsonwebtoken</groupId>
+       <artifactId>jjwt-jackson</artifactId>
+       <version>${jjwt.version}</version>
+    </dependency>
+
   </dependencies>
   
   <build>
