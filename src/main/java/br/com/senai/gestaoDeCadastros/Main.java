@@ -38,11 +38,6 @@ public class Main {
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
-			Usuario usuario = new Usuario();
-			usuario.setEmail("kauanm@gmail.com");
-			usuario.setRole(Role.Administrador);
-			usuario.setSenha("123456a");
-			usuarioService.salvar(usuario);
 			System.out.println("Running!!!");
 		};
 	}

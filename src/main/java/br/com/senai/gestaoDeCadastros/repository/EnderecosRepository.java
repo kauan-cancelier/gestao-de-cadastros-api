@@ -14,6 +14,7 @@ public interface EnderecosRepository extends JpaRepository<Endereco, Integer>{
 	@Query("SELECT e FROM Endereco e WHERE e.id = :id")
 	public Endereco buscarPor(Integer id);
 	
-	@Query("SELECT e FROM Endereco e WHERE e.id_cliente = idDoCliente")
+	@Query("SELECT e FROM Endereco e WHERE e.cliente.id = :idDoCliente")
 	public Page<Endereco> listarPor(Integer idDoCliente, Pageable pagina);
+
 }
