@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.common.base.Preconditions;
 
+import br.com.senai.gestaoDeCadastros.dto.UsuarioDto;
 import br.com.senai.gestaoDeCadastros.entity.Usuario;
 import br.com.senai.gestaoDeCadastros.entity.enums.Role;
 import br.com.senai.gestaoDeCadastros.service.UsuarioService;
@@ -36,9 +37,8 @@ public class UsuarioController {
 	
 	@GetMapping("id/{id}")
 	public ResponseEntity<?> buscarPor(@PathVariable("id") Integer id) {
-		return ResponseEntity.ok(converter.toJsonMap(usuarioService.buscarPor(id)));
+		return ResponseEntity.ok(converteDto(usuarioService.buscarPor(id)));
 	}
-	
 	
 	@GetMapping
 	public ResponseEntity<?> listarPor(@RequestParam("role") Role role, @RequestParam("pagina")  Optional<Integer> pagina) {
@@ -61,6 +61,14 @@ public class UsuarioController {
 	public ResponseEntity<?> alterar(@RequestBody Usuario usuario) {
 		Preconditions.checkArgument(usuario.isPersistido(), "O usuario deve possuir id para alteração");
 		return ResponseEntity.ok(converter.toJsonMap(usuarioService.salvar(usuario)));
+	}
+	
+	private UsuarioDto converteDto(Usuario usuario) {
+		UsuarioDto dto = new UsuarioDto();
+		dto.setEmail(usuario.getEmail());
+		dto.setId(usuario.getId());
+		dto.setRole(usuario.getRole());
+		return dto;
 	}
 	
 }
