@@ -32,8 +32,8 @@ public class ApiSecurityConfig {
 	private CredencialDeAcessoServiceImpl credencialDeAcessoServiceImpl;
 
 	@Bean
-	public PasswordEncoder passwordEnconder() { 
-		return new BCryptPasswordEncoder();
+	public PasswordEncoder passwordEncoder() { 
+	    return new BCryptPasswordEncoder();
 	}
 	
 	@Bean
@@ -45,7 +45,7 @@ public class ApiSecurityConfig {
 	public AuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
 		authenticationProvider.setUserDetailsService(credencialDeAcessoServiceImpl);
-		authenticationProvider.setPasswordEncoder(passwordEnconder());
+		authenticationProvider.setPasswordEncoder(passwordEncoder());
 		return authenticationProvider;
 	}
 	

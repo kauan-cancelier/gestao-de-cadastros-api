@@ -20,8 +20,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Autowired
 	private UsuariosRepository repository;
 	
-	@Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+	//TODO 
+    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 	@Override
 	public Usuario salvar(Usuario usuario) {
