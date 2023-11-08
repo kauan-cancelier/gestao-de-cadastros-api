@@ -2,6 +2,7 @@ package br.com.senai.gestaoDeCadastros.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.google.common.base.Preconditions;
@@ -43,9 +44,9 @@ public class EnderecoServiceImpl implements EnderecoService {
 	}
 
 	@Override
-	public Page<Endereco> listarPor(Integer idDoCliente) {
+	public Page<Endereco> listarPor(Integer idDoCliente, Pageable pagina) {
 		Preconditions.checkNotNull(idDoCliente, "O cliente é obrigatório para listagem de endereços. ");
-		return enderecosRepository.listarPor(idDoCliente);
+		return enderecosRepository.listarPor(idDoCliente, pagina);
 	}
 	
 	
