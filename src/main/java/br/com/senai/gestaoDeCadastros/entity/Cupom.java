@@ -7,6 +7,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
@@ -14,7 +16,7 @@ import jakarta.validation.constraints.Positive;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@Entity(name = "cupom")
+@Entity(name = "Cupom")
 @Table(name = "cupons")
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -22,8 +24,8 @@ public class Cupom {
 	
 	@Id
 	@Column(name = "id")
-	@NotNull(message = "O id é obrigatório. ")
 	@EqualsAndHashCode.Include
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
 	@Column(name = "porcentagem")

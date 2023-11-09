@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import com.fasterxml.jackson.datatype.hibernate5.jakarta.Hibernate5JakartaModule;
 
 import br.com.senai.gestaoDeCadastros.service.ClienteService;
+import br.com.senai.gestaoDeCadastros.service.EnderecoService;
 import br.com.senai.gestaoDeCadastros.service.UsuarioService;
 
 @SpringBootApplication
@@ -24,6 +25,10 @@ public class Main {
 	@Qualifier("clienteServiceImpl")
 	ClienteService clienteService;
 	
+	@Autowired
+	@Qualifier("enderecoServiceImpl")
+	EnderecoService enderecoService;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(Main.class, args);
 	}
@@ -36,7 +41,7 @@ public class Main {
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
-			System.out.println("Running!!!");
+			System.out.println("Running");
 		};
 	}
 }

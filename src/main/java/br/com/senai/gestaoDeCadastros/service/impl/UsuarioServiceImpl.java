@@ -1,5 +1,6 @@
 package br.com.senai.gestaoDeCadastros.service.impl;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,13 +19,19 @@ public class UsuarioServiceImpl implements UsuarioService {
 	
 	@Autowired
 	private UsuariosRepository repository;
+	
+	//TODO 
+    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 	@Override
 	public Usuario salvar(Usuario usuario) {
-		Preconditions.checkNotNull(usuario, "O usuário é obrigatório para salvar. ");
-		EmailValidator.isValid(usuario.getEmail());
-		validarEmailPersistido(usuario.getEmail());
-		return repository.save(usuario);
+	    Preconditions.checkNotNull(usuario, "O usuário é obrigatório para salvar. ");
+	    if (usuario.getId() != null) {
+	        Preconditions.checkNotNull(repository.buscarPor(usuario.getId()), "Nenhum usuário encontrado com esse id. ");
+	    }
+	    validarEmailPersistido(usuario.getEmail());
+	    usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
+	    return repository.save(usuario);
 	}
 
 	@Override
@@ -56,6 +63,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 	
 	private void validarEmailPersistido(String email) {
+		EmailValidator.isValid(email);
 	    if (buscarPor(email) != null) {
 	        throw new IllegalArgumentException("Esse email já está salvo.");
 	    }
