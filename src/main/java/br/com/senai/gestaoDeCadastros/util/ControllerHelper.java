@@ -4,12 +4,12 @@ import java.util.Optional;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ControllerHelper {
 	
-	private ControllerHelper() {}
-	
-	public static Pageable paginar(Optional<Integer> pagina) {
+	public Pageable paginar(Optional<Integer> pagina) {
 		if (pagina.isPresent()) {
 			return PageRequest.of(pagina.get(), 15);
 		} else {

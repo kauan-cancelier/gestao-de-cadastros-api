@@ -38,6 +38,9 @@ public class EnderecosController {
 	@Qualifier("clienteServiceProxy")
 	ClienteService clienteService;
 	
+	@Autowired
+	ControllerHelper helper;
+	
 	@GetMapping("id/{id}")
 	public ResponseEntity<?> buscarPor(@PathVariable("id") Integer id) {
 		return ResponseEntity.ok(enderecoService.buscarPor(id));
@@ -45,7 +48,7 @@ public class EnderecosController {
 	
 	@GetMapping
 	public ResponseEntity<?> listarPor(@RequestParam("idDoCliente") Integer idDoCliente, @RequestParam("pagina")  Optional<Integer> pagina) {
-		return ResponseEntity.ok(converter.toJsonMap(enderecoService.listarPor(clienteService.buscarPor(idDoCliente), ControllerHelper.paginar(pagina))));
+		return ResponseEntity.ok(converter.toJsonMap(enderecoService.listarPor(clienteService.buscarPor(idDoCliente), helper.paginar(pagina))));
 	}
 	
 	@PostMapping
