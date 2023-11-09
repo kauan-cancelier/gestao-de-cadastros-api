@@ -26,7 +26,6 @@ public class EnderecoServiceImpl implements EnderecoService {
 
 	@Override
 	public Endereco removerPor(Integer id) {
-		Preconditions.checkNotNull(id, "O id é obrigatório para exclusão. ");
 		Endereco endereco = buscarPor(id);
 		enderecosRepository.delete(endereco);
 		return endereco;
