@@ -7,16 +7,13 @@ import org.springframework.stereotype.Service;
 
 import com.google.common.base.Preconditions;
 
+import br.com.senai.gestaoDeCadastros.entity.Cliente;
 import br.com.senai.gestaoDeCadastros.entity.Endereco;
-import br.com.senai.gestaoDeCadastros.repository.ClientesRepository;
 import br.com.senai.gestaoDeCadastros.repository.EnderecosRepository;
 import br.com.senai.gestaoDeCadastros.service.EnderecoService;
 
 @Service
 public class EnderecoServiceImpl implements EnderecoService {
-	
-	@Autowired
-	ClientesRepository clientesRepository;
 	
 	@Autowired
 	EnderecosRepository enderecosRepository;
@@ -44,9 +41,9 @@ public class EnderecoServiceImpl implements EnderecoService {
 	}
 
 	@Override
-	public Page<Endereco> listarPor(Integer idDoCliente, Pageable pagina) {
-		Preconditions.checkNotNull(idDoCliente, "O cliente é obrigatório para listagem de endereços. ");
-		return enderecosRepository.listarPor(idDoCliente, pagina);
+	public Page<Endereco> listarPor(Cliente cliente, Pageable pagina) {
+		Preconditions.checkNotNull(cliente, "O cliente é obrigatório para listagem de endereços. ");
+		return enderecosRepository.listarPor(cliente, pagina);
 	}
 	
 	

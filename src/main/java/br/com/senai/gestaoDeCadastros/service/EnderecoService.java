@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 
+import br.com.senai.gestaoDeCadastros.entity.Cliente;
 import br.com.senai.gestaoDeCadastros.entity.Endereco;
 import jakarta.validation.constraints.NotNull;
 
@@ -24,5 +25,5 @@ public interface EnderecoService {
 	
 	public Page<Endereco> listarPor(
 			@NotNull(message = "O id do cliente é obrigatório para listagem de endereços. ")
-			Integer idDoCliente, Pageable pagina);
+			Cliente cliente, Pageable pagina);
 }
