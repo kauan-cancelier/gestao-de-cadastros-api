@@ -25,7 +25,7 @@ import jakarta.transaction.Transactional;
 
 @RestController
 @RequestMapping("/enderecos")
-public class EnderecoController {
+public class EnderecosController {
 	
 	@Autowired
 	private MapConverter converter;

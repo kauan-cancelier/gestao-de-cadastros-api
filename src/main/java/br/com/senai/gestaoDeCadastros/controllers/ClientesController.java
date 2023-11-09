@@ -20,7 +20,7 @@ import jakarta.transaction.Transactional;
 
 @RestController
 @RequestMapping("/clientes")
-public class ClienteController {
+public class ClientesController {
 	
 	@Autowired
 	private MapConverter converter;

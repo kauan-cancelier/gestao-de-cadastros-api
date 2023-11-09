@@ -26,7 +26,7 @@ import jakarta.transaction.Transactional;
 
 @RestController
 @RequestMapping("/usuarios")
-public class UsuarioController {
+public class UsuariosController {
 	
 	@Autowired
 	private MapConverter converter;
