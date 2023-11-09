@@ -17,7 +17,6 @@ public class EnderecoServiceProxy implements EnderecoService {
 	@Qualifier("enderecoServiceImpl")
 	private EnderecoService service;
 	
-	
 	@Override
 	public Endereco salvar(Endereco endereco) {
 		return service.salvar(endereco);
@@ -37,5 +36,5 @@ public class EnderecoServiceProxy implements EnderecoService {
 	public Page<Endereco> listarPor(Cliente cliente, Pageable paginacao) {
 		return service.listarPor(cliente, paginacao);
 	}
-
+	
 }

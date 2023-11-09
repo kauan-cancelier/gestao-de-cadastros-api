@@ -1,5 +1,7 @@
 package br.com.senai.gestaoDeCadastros;
 
+import org.apache.camel.CamelContext;
+import org.apache.camel.ProducerTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
@@ -29,6 +31,9 @@ public class Main {
 	@Qualifier("enderecoServiceImpl")
 	EnderecoService enderecoService;
 	
+	@Autowired
+    private CamelContext camelContext;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(Main.class, args);
 	}
@@ -41,7 +46,11 @@ public class Main {
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
-			System.out.println("Running");
+            ProducerTemplate producerTemplate = camelContext.createProducerTemplate();
+
+            String response = producerTemplate.requestBody("direct:cep", null, String.class);
+
+            System.out.println("Response from ViaCep: " + response);
 		};
 	}
 }

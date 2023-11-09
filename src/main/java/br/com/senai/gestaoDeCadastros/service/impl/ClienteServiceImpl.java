@@ -19,6 +19,8 @@ public class ClienteServiceImpl implements ClienteService {
 	
 	@Autowired
 	UsuariosRepository usuariosRepository;
+	
+	
 
 	@Override
 	public Cliente salvar(Cliente cliente) {
@@ -45,5 +47,5 @@ public class ClienteServiceImpl implements ClienteService {
 		Preconditions.checkNotNull(clienteEncontrado, "Não foi encontrado nenhum cliente para o id informado. ");
 		return clienteEncontrado;
 	}
-
+	
 }
