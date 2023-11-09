@@ -16,7 +16,7 @@ import jakarta.validation.constraints.Positive;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@Entity(name = "cupom")
+@Entity(name = "Cupom")
 @Table(name = "cupons")
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
