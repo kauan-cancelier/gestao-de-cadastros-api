@@ -41,7 +41,12 @@ public class Main {
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
-			System.out.println("Running");
+//			Usuario usuario = new Usuario();
+//			usuario.setEmail("kauanmello123@gmail.com");
+//			usuario.setRole(Role.Administrador);
+//			usuario.setSenha("12345678");
+//			usuarioService.salvar(usuario);
+			System.out.println("Running gestao de cadastros. ");
 		};
 	}
 }
