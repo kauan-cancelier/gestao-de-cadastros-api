@@ -19,11 +19,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import br.com.senai.gestaoDeCadastros.entity.enums.Role;
 import br.com.senai.gestaoDeCadastros.service.impl.CredencialDeAcessoServiceImpl;
 
 
 @Configuration
 public class ApiSecurityConfig {
+	
+	private final String ADMINISTRADOR = Role.Administrador.toString();
+	
+	private final String CLIENTE = Role.Cliente.toString();
 
 	@Autowired
 	private FiltroDeAutenticacaoJwt filtroDeAutenticacaoJwt;
@@ -67,14 +72,16 @@ public class ApiSecurityConfig {
 		.authorizeHttpRequests(
 				request -> request.requestMatchers("/auth/**")
 				.permitAll()
-				.requestMatchers(HttpMethod.POST, "/usuarios/**")
-					.hasAnyAuthority("Administrador")
-				.requestMatchers(HttpMethod.PUT, "/usuarios/**")
-					.hasAnyAuthority("Administrador")
-				.requestMatchers(HttpMethod.PATCH, "/usuarios/**")
-					.hasAnyAuthority("Administrador")
+				.requestMatchers(HttpMethod.POST, "/usuarios")
+					.permitAll()
+				.requestMatchers("/usuarios/**")
+					.hasAnyAuthority(ADMINISTRADOR)
 				.requestMatchers("/clientes/**")
-					.hasAnyAuthority("Administrador", "Clientes")
+					.hasAnyAuthority(ADMINISTRADOR)
+				.requestMatchers("/enderecos/**")
+					.hasAnyAuthority(ADMINISTRADOR)
+				.requestMatchers("/cupons/**")
+					.hasAnyAuthority(ADMINISTRADOR, CLIENTE)
 				.anyRequest().authenticated())
 		.sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 		.authenticationProvider(authenticationProvider()).addFilterBefore(filtroDeAutenticacaoJwt,

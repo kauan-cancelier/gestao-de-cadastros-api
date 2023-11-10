@@ -8,12 +8,24 @@ import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.http.HttpMethods;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CardapiosApi extends RouteBuilder implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
+	
+	private String url = "https://cardapios-mktplace-api-production.up.railway.app";
+	
+	private String authUrl = url + "/auth";
+	
+	@Value("${cardapios.login}")
+	private String login;
+	
+	@Value("${cardapios.senha}")
+	private String senha;
+	
 
 	@Override
     public void configure() throws Exception {
@@ -28,12 +40,12 @@ public class CardapiosApi extends RouteBuilder implements Serializable {
             	exchange.setProperty("idDoRestaurante", body.get("idDoRestaurante"));
             	
                 JSONObject requestBodyJson = new JSONObject();
-                requestBodyJson.put("login", "kauan@gmail.com");
-                requestBodyJson.put("senha", "13245678");
+                requestBodyJson.put("login", login);
+                requestBodyJson.put("senha", senha);
                 exchange.getMessage().setBody(requestBodyJson.toString());;
             }
         })
-        .to("http://localhost:9090/auth")
+        .to(authUrl)
         .process(new Processor() {
             @Override
             public void process(Exchange exchange) throws Exception {
@@ -47,7 +59,7 @@ public class CardapiosApi extends RouteBuilder implements Serializable {
         .setHeader(Exchange.HTTP_METHOD, constant(HttpMethods.GET))
         .setHeader("Authorization", simple("Bearer ${exchangeProperty.token}"))
         .setHeader(Exchange.CONTENT_TYPE, simple("application/json;charset=UTF-8"))
-        .toD("http://localhost:9090/restaurantes/id/${exchangeProperty.idDoRestaurante}")
+        .toD(url + "/restaurantes/id/${exchangeProperty.idDoRestaurante}")
         .process(new Processor() {		
 			@Override
 			public void process(Exchange exchange) throws Exception {

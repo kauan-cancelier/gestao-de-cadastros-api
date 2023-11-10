@@ -52,25 +52,30 @@ public class Main {
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
-			
 			JSONObject bodyRequest = new JSONObject();
 			bodyRequest.put("idDoRestaurante", 9);
 
-			JSONObject restauranteJson = cardapioApi.requestBody("direct:cardapios", bodyRequest, JSONObject.class);
-			RestauranteDto dto = new RestauranteDto();
-			dto.setDescricao(restauranteJson.getString("descricao"));
-			dto.setId(restauranteJson.getInt("id"));
-			dto.setNome(restauranteJson.getString("nome"));
-			dto.setStatus(restauranteJson.getString("status"));
-			EnderecoDoRestauranteDto enderecoDoRestauranteDto = new EnderecoDoRestauranteDto();
-			JSONObject end = restauranteJson.getJSONObject("endereco");
-			enderecoDoRestauranteDto.setBairro(end.getString("bairro"));
-			enderecoDoRestauranteDto.setCidade(end.getString("cidade"));
-			enderecoDoRestauranteDto.setComplemento(end.getString("complemento"));
-			enderecoDoRestauranteDto.setLogradouro(end.getString("logradouro"));
-			dto.setEnderecoDoRestauranteDto(enderecoDoRestauranteDto);
-			System.out.println(dto);
+//			JSONObject restauranteJson = cardapioApi.requestBody("direct:cardapios", bodyRequest, JSONObject.class);
+//			RestauranteDto dto = new RestauranteDto();
+//			dto.setDescricao(restauranteJson.getString("descricao"));
+//			dto.setId(restauranteJson.getInt("id"));
+//			dto.setNome(restauranteJson.getString("nome"));
+//			dto.setStatus(restauranteJson.getString("status"));
+//			EnderecoDoRestauranteDto enderecoDoRestauranteDto = new EnderecoDoRestauranteDto();
+//			JSONObject end = restauranteJson.getJSONObject("endereco");
+//			enderecoDoRestauranteDto.setBairro(end.getString("bairro"));
+//			enderecoDoRestauranteDto.setCidade(end.getString("cidade"));
+//			enderecoDoRestauranteDto.setComplemento(end.getString("complemento"));
+//			enderecoDoRestauranteDto.setLogradouro(end.getString("logradouro"));
+//			dto.setEnderecoDoRestauranteDto(enderecoDoRestauranteDto);
+//			System.out.println(dto);
 			
+//			Usuario usuario = new Usuario();
+//			usuario.setEmail("kauanmello123@gmail.com");
+//			usuario.setRole(Role.Administrador);
+//			usuario.setSenha("12345678");
+//			usuarioService.salvar(usuario);
+			System.out.println("Running gestao de cadastros. ");
 		};
 	}
 }

@@ -2,6 +2,8 @@ package br.com.senai.gestaoDeCadastros.entity;
 
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.senai.gestaoDeCadastros.entity.enums.Status;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,6 +13,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
@@ -45,5 +48,11 @@ public class Cupom {
 	@Enumerated(EnumType.STRING)
 	@NotNull(message = "O status do cupom é obrigatório. ")
 	private Status status;
+	
+	@JsonIgnore
+	@Transient
+	public boolean isPersistido() {
+		return getId() != null && getId() > 0;
+	}
 	
 }
