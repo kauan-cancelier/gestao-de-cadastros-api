@@ -5,6 +5,7 @@ import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -71,11 +72,15 @@ public class ApiSecurityConfig {
 		.authorizeHttpRequests(
 				request -> request.requestMatchers("/auth/**")
 				.permitAll()
+				.requestMatchers(HttpMethod.POST, "/usuarios")
+					.permitAll()
 				.requestMatchers("/usuarios/**")
-					.hasAnyAuthority(ADMINISTRADOR, CLIENTE)
+					.hasAnyAuthority(ADMINISTRADOR)
 				.requestMatchers("/clientes/**")
-					.hasAnyAuthority(ADMINISTRADOR, CLIENTE)
+					.hasAnyAuthority(ADMINISTRADOR)
 				.requestMatchers("/enderecos/**")
+					.hasAnyAuthority(ADMINISTRADOR)
+				.requestMatchers("/cupons/**")
 					.hasAnyAuthority(ADMINISTRADOR, CLIENTE)
 				.anyRequest().authenticated())
 		.sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
