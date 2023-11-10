@@ -1,7 +1,7 @@
 package br.com.senai.gestaoDeCadastros;
 
-import org.apache.camel.CamelContext;
 import org.apache.camel.ProducerTemplate;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
@@ -12,6 +12,8 @@ import org.springframework.context.annotation.Bean;
 
 import com.fasterxml.jackson.datatype.hibernate5.jakarta.Hibernate5JakartaModule;
 
+import br.com.senai.gestaoDeCadastros.dto.EnderecoDoRestauranteDto;
+import br.com.senai.gestaoDeCadastros.dto.RestauranteDto;
 import br.com.senai.gestaoDeCadastros.service.ClienteService;
 import br.com.senai.gestaoDeCadastros.service.EnderecoService;
 import br.com.senai.gestaoDeCadastros.service.UsuarioService;
@@ -31,8 +33,8 @@ public class Main {
 	@Qualifier("enderecoServiceImpl")
 	EnderecoService enderecoService;
 	
-	@Autowired
-    private CamelContext camelContext;
+	/*@Autowired
+    private CamelContext camelContext;*/
 	
 	public static void main(String[] args) {
 		SpringApplication.run(Main.class, args);
@@ -43,14 +45,32 @@ public class Main {
 		return new Hibernate5JakartaModule();
 	}
 	 
+
+	@Autowired
+	private ProducerTemplate cardapioApi;
+	
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
-            ProducerTemplate producerTemplate = camelContext.createProducerTemplate();
+			
+			JSONObject bodyRequest = new JSONObject();
+			bodyRequest.put("idDoRestaurante", 9);
 
-            String response = producerTemplate.requestBody("direct:cep", null, String.class);
-
-            System.out.println("Response from ViaCep: " + response);
+			JSONObject restauranteJson = cardapioApi.requestBody("direct:cardapios", bodyRequest, JSONObject.class);
+			RestauranteDto dto = new RestauranteDto();
+			dto.setDescricao(restauranteJson.getString("descricao"));
+			dto.setId(restauranteJson.getInt("id"));
+			dto.setNome(restauranteJson.getString("nome"));
+			dto.setStatus(restauranteJson.getString("status"));
+			EnderecoDoRestauranteDto enderecoDoRestauranteDto = new EnderecoDoRestauranteDto();
+			JSONObject end = restauranteJson.getJSONObject("endereco");
+			enderecoDoRestauranteDto.setBairro(end.getString("bairro"));
+			enderecoDoRestauranteDto.setCidade(end.getString("cidade"));
+			enderecoDoRestauranteDto.setComplemento(end.getString("complemento"));
+			enderecoDoRestauranteDto.setLogradouro(end.getString("logradouro"));
+			dto.setEnderecoDoRestauranteDto(enderecoDoRestauranteDto);
+			System.out.println(dto);
+			
 		};
 	}
 }
