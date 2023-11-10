@@ -18,13 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.common.base.Preconditions;
 
 import br.com.senai.gestaoDeCadastros.entity.Endereco;
+import br.com.senai.gestaoDeCadastros.service.ClienteService;
 import br.com.senai.gestaoDeCadastros.service.EnderecoService;
 import br.com.senai.gestaoDeCadastros.util.ControllerHelper;
 import jakarta.transaction.Transactional;
 
 @RestController
 @RequestMapping("/enderecos")
-public class EnderecoController {
+public class EnderecosController {
 	
 	@Autowired
 	private MapConverter converter;
@@ -33,6 +34,13 @@ public class EnderecoController {
 	@Qualifier("enderecoServiceProxy")
 	EnderecoService enderecoService;
 	
+	@Autowired
+	@Qualifier("clienteServiceProxy")
+	ClienteService clienteService;
+	
+	@Autowired
+	ControllerHelper helper;
+	
 	@GetMapping("id/{id}")
 	public ResponseEntity<?> buscarPor(@PathVariable("id") Integer id) {
 		return ResponseEntity.ok(enderecoService.buscarPor(id));
@@ -40,7 +48,7 @@ public class EnderecoController {
 	
 	@GetMapping
 	public ResponseEntity<?> listarPor(@RequestParam("idDoCliente") Integer idDoCliente, @RequestParam("pagina")  Optional<Integer> pagina) {
-		return ResponseEntity.ok(converter.toJsonMap(enderecoService.listarPor(idDoCliente, ControllerHelper.paginar(pagina))));
+		return ResponseEntity.ok(converter.toJsonMap(enderecoService.listarPor(clienteService.buscarPor(idDoCliente), helper.paginar(pagina))));
 	}
 	
 	@PostMapping

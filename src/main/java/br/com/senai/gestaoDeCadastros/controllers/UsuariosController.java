@@ -26,7 +26,7 @@ import jakarta.transaction.Transactional;
 
 @RestController
 @RequestMapping("/usuarios")
-public class UsuarioController {
+public class UsuariosController {
 	
 	@Autowired
 	private MapConverter converter;
@@ -35,6 +35,9 @@ public class UsuarioController {
 	@Qualifier("usuarioServiceProxy")
 	UsuarioService usuarioService;
 	
+	@Autowired
+	ControllerHelper helper;
+	
 	@GetMapping("id/{id}")
 	public ResponseEntity<?> buscarPor(@PathVariable("id") Integer id) {
 		return ResponseEntity.ok(converteDto(usuarioService.buscarPor(id)));
@@ -42,7 +45,7 @@ public class UsuarioController {
 	
 	@GetMapping
 	public ResponseEntity<?> listarPor(@RequestParam("role") Role role, @RequestParam("pagina")  Optional<Integer> pagina) {
-		return ResponseEntity.ok(converter.toJsonMap(usuarioService.listarPor(role, ControllerHelper.paginar(pagina))));
+		return ResponseEntity.ok(converter.toJsonMap(usuarioService.listarPor(role, helper.paginar(pagina))));
 	}
 	
 	@PostMapping

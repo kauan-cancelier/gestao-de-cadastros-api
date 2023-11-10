@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import br.com.senai.gestaoDeCadastros.entity.Cliente;
 import br.com.senai.gestaoDeCadastros.entity.Endereco;
 import br.com.senai.gestaoDeCadastros.service.EnderecoService;
 
@@ -32,8 +33,8 @@ public class EnderecoServiceProxy implements EnderecoService {
 	}
 
 	@Override
-	public Page<Endereco> listarPor(Integer idDoCliente, Pageable paginacao) {
-		return service.listarPor(idDoCliente, paginacao);
+	public Page<Endereco> listarPor(Cliente cliente, Pageable paginacao) {
+		return service.listarPor(cliente, paginacao);
 	}
 
 }
