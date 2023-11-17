@@ -54,14 +54,10 @@ public class Main {
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
 			
-			JSONObject body = new JSONObject();
-			body.put("idDoRestaurante", 66);
-			JSONObject jsonPedidos = pedidoApi.requestBody("direct:listarPedidos", body, JSONObject.class);
-			System.out.println(jsonPedidos);
-			
-			
-			
-			
+//			JSONObject body = new JSONObject();
+//			body.put("idDoRestaurante", 66);
+//			JSONObject jsonPedidos = pedidoApi.requestBody("direct:listarPedidos", body, JSONObject.class);
+//			System.out.println(jsonPedidos);
 			
 //			JSONObject bodyRequest = new JSONObject();
 //			bodyRequest.put("idDoRestaurante", 9);
