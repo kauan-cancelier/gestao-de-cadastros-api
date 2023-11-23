@@ -24,7 +24,6 @@ public class FromEnderecos extends RouteBuilder implements Serializable {
     
     @Value("${cardapios.senha}")
     private String senha;
-	
 
 	@Override
     public void configure() throws Exception {
