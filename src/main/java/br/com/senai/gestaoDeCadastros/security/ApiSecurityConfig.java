@@ -82,6 +82,8 @@ public class ApiSecurityConfig {
 					.hasAnyAuthority(ADMINISTRADOR)
 				.requestMatchers("/cupons/**")
 					.hasAnyAuthority(ADMINISTRADOR, CLIENTE)
+				.requestMatchers("/integracoes/**")
+					.hasAnyAuthority(ADMINISTRADOR)
 				.anyRequest().authenticated())
 		.sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 		.authenticationProvider(authenticationProvider()).addFilterBefore(filtroDeAutenticacaoJwt,

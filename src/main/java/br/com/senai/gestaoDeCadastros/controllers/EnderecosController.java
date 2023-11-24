@@ -48,7 +48,12 @@ public class EnderecosController {
 	
 	@GetMapping
 	public ResponseEntity<?> listarPor(@RequestParam("idDoCliente") Integer idDoCliente, @RequestParam("pagina")  Optional<Integer> pagina) {
-		return ResponseEntity.ok(converter.toJsonMap(enderecoService.listarPor(clienteService.buscarPor(idDoCliente), helper.paginar(pagina))));
+		return ResponseEntity.ok(converter.toJsonMap(
+				enderecoService.listarPor(
+						clienteService.buscarPor(idDoCliente),
+						helper.paginar(pagina)
+						)
+				));
 	}
 	
 	@PostMapping

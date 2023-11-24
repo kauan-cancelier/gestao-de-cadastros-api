@@ -14,7 +14,7 @@ public class FromListarPedidos extends RouteBuilder implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private String url = "http://localhost:3000";
+	private String url = "http://localhost:8080";
 	
 	private String authRoute = "direct:autenticarPedidos";
 	
