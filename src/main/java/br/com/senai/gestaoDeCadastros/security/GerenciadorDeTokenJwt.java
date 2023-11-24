@@ -23,10 +23,10 @@ public class GerenciadorDeTokenJwt {
 	@Value("${spring.jwt.ttl-in-millis}")
 	private int ttlInMillis;
 
-	public String gerarTokenPor(String login) {
+	public String gerarTokenPor(String idCliente) {
 		return Jwts.builder()
 				.setClaims(new HashMap<String, Object>())
-				.setSubject(login)
+				.setSubject(idCliente)
 				.setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + ttlInMillis))
 				.signWith(getChaveDeAssinatura(), SignatureAlgorithm.HS256)

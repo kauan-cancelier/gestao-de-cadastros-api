@@ -35,7 +35,7 @@ public class AuthController {
 		
 		Preconditions.checkArgument(tokenAutenticado.isAuthenticated(), "Email e/ou senha invalidos. ");
 		
-		String tokenGerado = gerenciadoDeToken.gerarTokenPor(solicitacao.getEmail());
+		String tokenGerado = gerenciadoDeToken.gerarTokenPor("7");
 		Map<String, Object> response = new HashMap<String, Object>();
 		
 		response.put("token", tokenGerado);
