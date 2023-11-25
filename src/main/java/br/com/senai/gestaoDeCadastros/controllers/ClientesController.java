@@ -1,5 +1,7 @@
 package br.com.senai.gestaoDeCadastros.controllers;
 
+import java.net.URI;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +39,8 @@ public class ClientesController {
 	@PostMapping
 	public ResponseEntity<?> inserir(@RequestBody Cliente cliente) {
 		Preconditions.checkArgument(!cliente.isPersistido(), "O cliente não pode possuir id para inserção");
-		return ResponseEntity.ok(converter.toJsonMap(clienteService.salvar(cliente)));
+		clienteService.salvar(cliente);
+		return ResponseEntity.created(URI.create("/usuarios/id/" + cliente.getId())).build();
 	}
 	
 	@Transactional
