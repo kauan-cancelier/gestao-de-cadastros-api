@@ -1,6 +1,6 @@
 package br.com.senai.gestaoDeCadastros.entity;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -47,7 +47,7 @@ public class Cliente {
 	
 	@Column(name = "data_nascimento")
 	@NotNull(message = "A data de nascimento é obrigatória. ")
-	private Date dataDeNascimento;
+	private LocalDate dataDeNascimento;
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_usuario", referencedColumnName = "id")
