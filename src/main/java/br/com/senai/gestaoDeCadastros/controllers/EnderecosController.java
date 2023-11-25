@@ -42,7 +42,7 @@ public class EnderecosController {
 	@Autowired
 	ControllerHelper helper;
 	
-	@GetMapping("id/{id}")
+	@GetMapping("/id/{id}")
 	public ResponseEntity<?> buscarPor(@PathVariable("id") Integer id) {
 		return ResponseEntity.ok(enderecoService.buscarPor(id));
 	}
