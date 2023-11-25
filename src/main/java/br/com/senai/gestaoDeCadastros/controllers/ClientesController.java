@@ -40,7 +40,7 @@ public class ClientesController {
 	public ResponseEntity<?> inserir(@RequestBody Cliente cliente) {
 		Preconditions.checkArgument(!cliente.isPersistido(), "O cliente não pode possuir id para inserção");
 		clienteService.salvar(cliente);
-		return ResponseEntity.created(URI.create("/usuarios/id/" + cliente.getId())).build();
+		return ResponseEntity.created(URI.create("/clientes/id/" + cliente.getId())).build();
 	}
 	
 	@Transactional
