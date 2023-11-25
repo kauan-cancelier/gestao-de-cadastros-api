@@ -1,10 +1,15 @@
 package br.com.senai.gestaoDeCadastros.controllers;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,9 +50,24 @@ public class UsuariosController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<?> listarPor(@RequestParam("role") Role role, @RequestParam("pagina")  Optional<Integer> pagina) {
-		return ResponseEntity.ok(converter.toJsonMap(usuarioService.listarPor(role, helper.paginar(pagina))));
+	public ResponseEntity<?> listarPor(@RequestParam("role") Role role, @RequestParam("pagina") Optional<Integer> pagina) {
+	    Page<Usuario> usuarios = usuarioService.listarPor(role, helper.paginar(pagina));
+	    List<Map<String, Object>> usuariosList = new ArrayList<>();
+
+	    for (Usuario usuario : usuarios.getContent()) {
+	        Map<String, Object> usuarioMapItens = new HashMap<>();
+	        usuarioMapItens.put("id", usuario.getId());
+	        usuarioMapItens.put("email", usuario.getEmail());
+	        usuarioMapItens.put("role", usuario.getRole());
+	        usuariosList.add(usuarioMapItens);
+	    }
+
+	    Map<String, Object> usuarioMap = new HashMap<>();
+	    usuarioMap.put("usuarios", usuariosList);
+
+	    return ResponseEntity.ok(usuarioMap);
 	}
+
 	
 	@PostMapping
 	public ResponseEntity<?> inserir(@RequestBody Usuario usuario) {
