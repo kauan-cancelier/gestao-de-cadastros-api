@@ -1,5 +1,6 @@
 package br.com.senai.gestaoDeCadastros.controllers;
 
+import java.net.URI;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +60,8 @@ public class EnderecosController {
 	@PostMapping
 	public ResponseEntity<?> inserir(@RequestBody Endereco endereco) {
 		Preconditions.checkArgument(!endereco.isPersistido(), "O endereco não pode possuir id para inserção. ");
-		return ResponseEntity.ok(converter.toJsonMap(enderecoService.salvar(endereco)));
+		enderecoService.salvar(endereco);
+		return ResponseEntity.created(URI.create("/enderecos/id/" + endereco.getId())).build();
 	}
 	
 	@Transactional
