@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -33,6 +34,7 @@ public class Usuario {
 	
 	@Column(name = "email")
 	@NotBlank(message = "O email é obrigatório. ")
+	@Email(message = "O email deve seguir o padrão example@example.com")
 	private String email;
 
 	@Column(name = "senha")
