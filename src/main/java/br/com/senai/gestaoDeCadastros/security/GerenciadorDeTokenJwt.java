@@ -24,17 +24,14 @@ public class GerenciadorDeTokenJwt {
 	@Value("${spring.jwt.ttl-in-millis}")
 	private int ttlInMillis;
 
-	public String gerarTokenPor(String login,
-			String idDoCliente,
-			String idDoRestaurante,
-			Role role
-			) {
+	public String gerarTokenPor(String login, String idDoCliente, String idDoRestaurante, Role role) {
 	    return Jwts.builder()
 	            .setClaims(new HashMap<>())
 	            .claim("login", login)
 	            .claim("idDoCliente", idDoCliente)
 	            .claim("idDoRestaurante", idDoRestaurante)
 	            .claim("role", role.toString())
+	            .setSubject(login)
 	            .setIssuedAt(new Date(System.currentTimeMillis()))
 	            .setExpiration(new Date(System.currentTimeMillis() + ttlInMillis))
 	            .signWith(getChaveDeAssinatura(), SignatureAlgorithm.HS256)

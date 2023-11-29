@@ -33,7 +33,7 @@ public class CuponsController {
 	@Autowired
 	ControllerHelper helper;
 	
-	@GetMapping("id/{id}")
+	@GetMapping("/id/{id}")
 	public ResponseEntity<?> buscarPor(@PathVariable("id") Integer id) {
 		return ResponseEntity.ok(cupomService.buscarPor(id));
 	}

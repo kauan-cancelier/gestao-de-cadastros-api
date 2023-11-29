@@ -31,7 +31,7 @@ public class ClientesController {
 	@Qualifier("clienteServiceProxy")
 	ClienteService clienteService;
 	
-	@GetMapping("id/{id}")
+	@GetMapping("/id/{id}")
 	public ResponseEntity<?> buscarPor(@PathVariable("id") Integer id) {
 		return ResponseEntity.ok(converter.toJsonMap(clienteService.buscarPor(id)));
 	}

@@ -44,7 +44,7 @@ public class UsuariosController {
 	@Autowired
 	ControllerHelper helper;
 	
-	@GetMapping("id/{id}")
+	@GetMapping("/id/{id}")
 	public ResponseEntity<?> buscarPor(@PathVariable("id") Integer id) {
 		return ResponseEntity.ok(converteDto(usuarioService.buscarPor(id)));
 	}
