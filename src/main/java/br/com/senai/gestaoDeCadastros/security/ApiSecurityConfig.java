@@ -30,6 +30,8 @@ public class ApiSecurityConfig {
 	
 	private final String CLIENTE = Role.Cliente.toString();
 	
+	private final String RESTAURANTE = Role.Restaurante.toString();
+	
 	@Autowired
 	private FiltroDeAutenticacaoJwt filtroDeAutenticacaoJwt;
 
@@ -75,15 +77,15 @@ public class ApiSecurityConfig {
 				.requestMatchers(HttpMethod.POST, "/usuarios")
 					.permitAll()
 				.requestMatchers("/usuarios/**")
-					.hasAnyAuthority(ADMINISTRADOR)
+					.hasAnyAuthority(ADMINISTRADOR, RESTAURANTE)
 				.requestMatchers("/clientes/**")
-					.hasAnyAuthority(ADMINISTRADOR)
+					.hasAnyAuthority(ADMINISTRADOR, RESTAURANTE)
 				.requestMatchers("/enderecos/**")
-					.hasAnyAuthority(ADMINISTRADOR)
+					.hasAnyAuthority(ADMINISTRADOR, RESTAURANTE)
 				.requestMatchers("/cupons/**")
-					.hasAnyAuthority(ADMINISTRADOR, CLIENTE)
+					.hasAnyAuthority(ADMINISTRADOR, CLIENTE, RESTAURANTE)
 				.requestMatchers("/integracoes/**")
-					.hasAnyAuthority(ADMINISTRADOR)
+					.hasAnyAuthority(ADMINISTRADOR, RESTAURANTE)
 				.anyRequest().authenticated())
 		.sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 		.authenticationProvider(authenticationProvider()).addFilterBefore(filtroDeAutenticacaoJwt,
