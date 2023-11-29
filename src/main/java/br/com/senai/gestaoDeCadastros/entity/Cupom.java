@@ -1,6 +1,6 @@
 package br.com.senai.gestaoDeCadastros.entity;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -38,7 +38,7 @@ public class Cupom {
 	
 	@Column(name = "validade")
 	@NotNull(message = "A validade é obrigatória. ")
-	private Date validade;
+	private LocalDate validade;
 	
 	@Column(name = "codigo")
 	@NotNull(message = "O código é obrigatório. ")

@@ -29,7 +29,7 @@ public class ApiSecurityConfig {
 	private final String ADMINISTRADOR = Role.Administrador.toString();
 	
 	private final String CLIENTE = Role.Cliente.toString();
-
+	
 	@Autowired
 	private FiltroDeAutenticacaoJwt filtroDeAutenticacaoJwt;
 

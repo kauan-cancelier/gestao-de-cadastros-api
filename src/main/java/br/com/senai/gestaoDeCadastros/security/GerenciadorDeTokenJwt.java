@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import br.com.senai.gestaoDeCadastros.entity.enums.Role;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -23,14 +24,21 @@ public class GerenciadorDeTokenJwt {
 	@Value("${spring.jwt.ttl-in-millis}")
 	private int ttlInMillis;
 
-	public String gerarTokenPor(String login) {
-		return Jwts.builder()
-				.setClaims(new HashMap<String, Object>())
-				.setSubject(login)
-				.setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + ttlInMillis))
-				.signWith(getChaveDeAssinatura(), SignatureAlgorithm.HS256)
-				.compact();
+	public String gerarTokenPor(String login,
+			String idDoCliente,
+			String idDoRestaurante,
+			Role role
+			) {
+	    return Jwts.builder()
+	            .setClaims(new HashMap<>())
+	            .claim("login", login)
+	            .claim("idDoCliente", idDoCliente)
+	            .claim("idDoRestaurante", idDoRestaurante)
+	            .claim("role", role.toString())
+	            .setIssuedAt(new Date(System.currentTimeMillis()))
+	            .setExpiration(new Date(System.currentTimeMillis() + ttlInMillis))
+	            .signWith(getChaveDeAssinatura(), SignatureAlgorithm.HS256)
+	            .compact();
 	}
 	
 	public String extrairEmailDo(String tokenGerado) {

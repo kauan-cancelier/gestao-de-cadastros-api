@@ -29,4 +29,9 @@ public class ClienteServiceProxy implements ClienteService {
 		return service.buscarPor(id);
 	}
 
+	@Override
+	public Cliente buscarPorIdDoUsuario(Integer idDoUsuario) {
+		return service.buscarPorIdDoUsuario(idDoUsuario);
+	}
+
 }

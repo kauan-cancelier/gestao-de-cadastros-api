@@ -20,4 +20,7 @@ public interface ClienteService {
 			@NotNull(message = "O id é obrigatório para busca de cliente. ") 
 			Integer id);
 	
+	public Cliente buscarPorIdDoUsuario(
+			@NotNull(message = "O id do usuario é obrigatório para busca de cliente pelo id do usuario. ")
+			Integer idDoUsuario);
 }
