@@ -1,5 +1,7 @@
 package br.com.senai.gestaoDeCadastros.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 
 import br.com.senai.gestaoDeCadastros.entity.Cupom;
@@ -20,4 +22,6 @@ public interface CupomService {
 			@NotNull(message = "O id é obrigatório para exclusão. ")
 			Integer id);
 
+	public Page<Cupom> listarTodos(Pageable pagina);
+	
 }

@@ -2,6 +2,8 @@ package br.com.senai.gestaoDeCadastros.service.proxy;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.senai.gestaoDeCadastros.entity.Cupom;
@@ -27,6 +29,11 @@ public class CupomServiceProxy implements CupomService {
 	@Override
 	public Cupom excluirPor(Integer id) {
 		return service.excluirPor(id);
+	}
+
+	@Override
+	public Page<Cupom> listarTodos(Pageable pagina) {
+		return service.listarTodos(pagina);
 	}
 
 }

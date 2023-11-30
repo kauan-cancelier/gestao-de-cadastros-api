@@ -1,5 +1,7 @@
 package br.com.senai.gestaoDeCadastros.controllers;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.common.base.Preconditions;
@@ -36,6 +39,11 @@ public class CuponsController {
 	@GetMapping("/id/{id}")
 	public ResponseEntity<?> buscarPor(@PathVariable("id") Integer id) {
 		return ResponseEntity.ok(cupomService.buscarPor(id));
+	}
+	
+	@GetMapping
+	public ResponseEntity<?> listarTodos(@RequestParam("pagina")  Optional<Integer> pagina) {
+		return ResponseEntity.ok(converter.toJsonMap(cupomService.listarTodos(helper.paginar(pagina))));
 	}
 	
 	@PostMapping

@@ -24,14 +24,9 @@ public class Main {
 		return new Hibernate5JakartaModule();
 	}
 	
-	@Autowired
-	@Qualifier("clienteServiceImpl")
-	private ClienteService clienteService;
-	
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
-			System.out.println(clienteService.buscarPor(7));
 			System.out.println("Running gestao de cadastros. ");
 		};
 	}

@@ -1,6 +1,8 @@
 package br.com.senai.gestaoDeCadastros.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.google.common.base.Preconditions;
@@ -34,6 +36,11 @@ public class CupomServiceImpl implements CupomService {
 		Cupom cupom = buscarPor(id);
 		cuponsRepository.delete(cupom);
 		return cupom;
+	}
+
+	@Override
+	public Page<Cupom> listarTodos(Pageable pagina) {
+		return cuponsRepository.listarTodos(pagina);
 	}
 
 }

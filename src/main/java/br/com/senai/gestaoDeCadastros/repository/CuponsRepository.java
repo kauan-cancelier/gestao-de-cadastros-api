@@ -1,5 +1,7 @@
 package br.com.senai.gestaoDeCadastros.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -15,4 +17,6 @@ public interface CuponsRepository extends JpaRepository<Cupom, Integer> {
 			@NotNull(message = "O id é obrigatório para busca. ")
 			Integer id);
 	
+	@Query("SELECT c FROM Cupom c")
+	public Page<Cupom> listarTodos(Pageable pagina);
 }
