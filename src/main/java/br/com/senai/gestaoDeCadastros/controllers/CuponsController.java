@@ -1,5 +1,6 @@
 package br.com.senai.gestaoDeCadastros.controllers;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -67,7 +68,8 @@ public class CuponsController {
 	@PostMapping
 	public ResponseEntity<?> inserir(@RequestBody Cupom cupom) {
 		Preconditions.checkArgument(!cupom.isPersistido(), "O cupom não pode possuir id para inserção. ");
-		return ResponseEntity.ok(converter.toJsonMap(cupomService.salvar(cupom)));
+		Cupom cupomSalvo= cupomService.salvar(cupom);
+		return ResponseEntity.created(URI.create("/cupons/id/" + cupomSalvo.getId())).build();
 	}
 
 	@Transactional
