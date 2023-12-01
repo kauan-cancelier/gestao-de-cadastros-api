@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.senai.gestaoDeCadastros.entity.Usuario;
 import br.com.senai.gestaoDeCadastros.entity.enums.Role;
+import br.com.senai.gestaoDeCadastros.entity.enums.Status;
 import br.com.senai.gestaoDeCadastros.service.UsuarioService;
 
 @Service
@@ -40,6 +41,11 @@ public class UsuarioServiceProxy implements UsuarioService {
 	@Override
 	public Usuario buscarPor(Integer id) {
 		return service.buscarPor(id);
+	}
+
+	@Override
+	public void alterarStatusPor(Integer id, Status status) {
+		service.alterarStatusPor(id, status);
 	}
 
 }

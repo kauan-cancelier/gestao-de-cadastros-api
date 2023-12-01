@@ -10,6 +10,7 @@ import com.google.common.base.Preconditions;
 
 import br.com.senai.gestaoDeCadastros.entity.Usuario;
 import br.com.senai.gestaoDeCadastros.entity.enums.Role;
+import br.com.senai.gestaoDeCadastros.entity.enums.Status;
 import br.com.senai.gestaoDeCadastros.repository.UsuariosRepository;
 import br.com.senai.gestaoDeCadastros.service.UsuarioService;
 
@@ -29,6 +30,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 	        Preconditions.checkNotNull(repository.buscarPor(usuario.getId()), "Nenhum usuário encontrado com esse id. ");
 	    }
 	    usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
+	    usuario.setStatus(Status.A);
 	    return repository.save(usuario);
 	}
 
@@ -57,6 +59,15 @@ public class UsuarioServiceImpl implements UsuarioService {
 		Usuario usuarioEncontrado = repository.buscarPor(id);
 		Preconditions.checkNotNull(usuarioEncontrado, "Não foi encontrado nenhum usuário para o id informado. ");
 		return usuarioEncontrado;
+	}
+
+	@Override
+	public void alterarStatusPor(Integer id, Status status) {
+		Preconditions.checkNotNull(id, "O id é obrigatório. ");
+		Preconditions.checkNotNull(status, "O status é obrigatório. ");
+		Usuario usuarioParaAlteracao = buscarPor(id);
+		Preconditions.checkArgument(usuarioParaAlteracao.getStatus() != status, "O status já foi salvo anteriormente. ");
+		repository.alterarStatusPor(id, status);
 	}
 	
 }

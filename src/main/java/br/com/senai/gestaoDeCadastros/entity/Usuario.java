@@ -3,6 +3,7 @@ package br.com.senai.gestaoDeCadastros.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.senai.gestaoDeCadastros.entity.enums.Role;
+import br.com.senai.gestaoDeCadastros.entity.enums.Status;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -45,6 +46,11 @@ public class Usuario {
 	@Enumerated(EnumType.STRING)
 	@NotNull(message = "O papel do usuário é obrigatório. ")
 	private Role role;
+	
+	@Column(name = "status")
+	@Enumerated(EnumType.STRING)
+	@NotNull(message = "O status do usuário é obrigatório. ")
+	private Status status;
 	
 	@JsonIgnore
 	@Transient

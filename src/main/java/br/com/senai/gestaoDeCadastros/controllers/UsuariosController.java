@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -26,6 +27,7 @@ import com.google.common.base.Preconditions;
 import br.com.senai.gestaoDeCadastros.dto.UsuarioDto;
 import br.com.senai.gestaoDeCadastros.entity.Usuario;
 import br.com.senai.gestaoDeCadastros.entity.enums.Role;
+import br.com.senai.gestaoDeCadastros.entity.enums.Status;
 import br.com.senai.gestaoDeCadastros.service.UsuarioService;
 import br.com.senai.gestaoDeCadastros.util.ControllerHelper;
 import jakarta.transaction.Transactional;
@@ -86,6 +88,16 @@ public class UsuariosController {
 	public ResponseEntity<?> alterar(@RequestBody Usuario usuario) {
 		Preconditions.checkArgument(usuario.isPersistido(), "O usuario deve possuir id para alteração");
 		return ResponseEntity.ok(converter.toJsonMap(usuarioService.salvar(usuario)));
+	}
+	
+	@Transactional
+	@PatchMapping("/id/{id}/status/{status}")
+	public ResponseEntity<?> alterarStatusPor(
+			@PathVariable("id") Integer id, @PathVariable("status") Status status) {
+		Preconditions.checkNotNull(id, "O id é obrigatório. ");
+		Preconditions.checkNotNull(status, "O status é obrigatório. ");
+		usuarioService.alterarStatusPor(id, status);
+		return ResponseEntity.ok().build();
 	}
 	
 	private UsuarioDto converteDto(Usuario usuario) {
