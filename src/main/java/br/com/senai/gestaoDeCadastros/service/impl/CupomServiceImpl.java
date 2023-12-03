@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.google.common.base.Preconditions;
 
 import br.com.senai.gestaoDeCadastros.entity.Cupom;
+import br.com.senai.gestaoDeCadastros.entity.enums.Status;
 import br.com.senai.gestaoDeCadastros.repository.CuponsRepository;
 import br.com.senai.gestaoDeCadastros.service.CupomService;
 
@@ -41,6 +42,15 @@ public class CupomServiceImpl implements CupomService {
 	@Override
 	public Page<Cupom> listarTodos(Pageable pagina) {
 		return cuponsRepository.listarTodos(pagina);
+	}
+
+	@Override
+	public void alterarStatusPor(Integer id, Status status) {
+		Preconditions.checkNotNull(id, "O id é obrigatório. ");
+		Preconditions.checkNotNull(status, "O status é obrigatório. ");
+		Cupom cupomParaAlteracao = buscarPor(id);
+		Preconditions.checkArgument(cupomParaAlteracao.getStatus() != status, "O status já foi salvo anteriormente. ");
+		cuponsRepository.alterarStatusPor(id, status);
 	}
 
 }

@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 
 import br.com.senai.gestaoDeCadastros.entity.Cupom;
+import br.com.senai.gestaoDeCadastros.entity.enums.Status;
 import jakarta.validation.constraints.NotNull;
 
 @Validated
@@ -23,5 +24,11 @@ public interface CupomService {
 			Integer id);
 
 	public Page<Cupom> listarTodos(Pageable pagina);
+	
+	public void alterarStatusPor(
+			@NotNull(message = "O id é obrigatório. ")
+			Integer id,
+			@NotNull(message = "O status é obrigatório. ")
+			Status status);
 	
 }

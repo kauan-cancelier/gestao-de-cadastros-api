@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.common.base.Preconditions;
 
 import br.com.senai.gestaoDeCadastros.entity.Cupom;
+import br.com.senai.gestaoDeCadastros.entity.enums.Status;
 import br.com.senai.gestaoDeCadastros.service.CupomService;
 import br.com.senai.gestaoDeCadastros.util.ControllerHelper;
 import jakarta.transaction.Transactional;
@@ -82,6 +84,16 @@ public class CuponsController {
 	public ResponseEntity<?> alterar(@RequestBody Cupom cupom) {
 		Preconditions.checkArgument(cupom.isPersistido(), "O cupom deve possuir id para alteração");
 		return ResponseEntity.ok(converter.toJsonMap(cupomService.salvar(cupom)));
+	}
+	
+	@Transactional
+	@PatchMapping("/id/{id}/status/{status}")
+	public ResponseEntity<?> alterarStatusPor(
+			@PathVariable("id") Integer id, @PathVariable("status") Status status) {
+		Preconditions.checkNotNull(id, "O id é obrigatório. ");
+		Preconditions.checkNotNull(status, "O status é obrigatório. ");
+		cupomService.alterarStatusPor(id, status);
+		return ResponseEntity.ok().build();
 	}
 
 	private Map<String, Object> converter(Cupom cupom) {

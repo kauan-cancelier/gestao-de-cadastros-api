@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.senai.gestaoDeCadastros.entity.Cupom;
+import br.com.senai.gestaoDeCadastros.entity.enums.Status;
 import br.com.senai.gestaoDeCadastros.service.CupomService;
 
 @Service
@@ -34,6 +35,11 @@ public class CupomServiceProxy implements CupomService {
 	@Override
 	public Page<Cupom> listarTodos(Pageable pagina) {
 		return service.listarTodos(pagina);
+	}
+
+	@Override
+	public void alterarStatusPor(Integer id, Status status) {
+		service.alterarStatusPor(id, status);
 	}
 
 }
