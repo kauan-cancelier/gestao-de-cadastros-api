@@ -12,7 +12,7 @@ public class ClienteServiceProxy implements ClienteService {
 	
 	@Autowired
 	@Qualifier("clienteServiceImpl")
-	ClienteService service;
+	private ClienteService service;
 
 	@Override
 	public Cliente salvar(Cliente cliente) {

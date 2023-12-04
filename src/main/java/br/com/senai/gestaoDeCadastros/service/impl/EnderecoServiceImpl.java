@@ -1,8 +1,5 @@
 package br.com.senai.gestaoDeCadastros.service.impl;
 
-import org.apache.camel.CamelContext;
-import org.apache.camel.ProducerTemplate;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,14 +16,12 @@ import br.com.senai.gestaoDeCadastros.service.EnderecoService;
 public class EnderecoServiceImpl implements EnderecoService {
 	
 	@Autowired
-	EnderecosRepository enderecosRepository;
+	private EnderecosRepository enderecosRepository;
 	
-	@Autowired
-    private CamelContext camelContext;
-
 	@Override
 	public Endereco salvar(Endereco endereco) {
 		Preconditions.checkNotNull(endereco, "O endereço é obrigatório para salvar. ");
+		Preconditions.checkArgument(!validarCEP(endereco.getCep()), "O cep é inválido. ");
 		return enderecosRepository.save(endereco);
 	}
 
@@ -51,21 +46,7 @@ public class EnderecoServiceImpl implements EnderecoService {
 		return enderecosRepository.listarPor(cliente, pagina);
 	}
 	
-	public Endereco buscarEnderecoPelo(String cep) {
-		Preconditions.checkNotNull(cep, "O cep é obrigatório");
-        ProducerTemplate producerTemplate = camelContext.createProducerTemplate();
-        JSONObject cepEncontrado = new JSONObject(producerTemplate.requestBody("direct:cep", null, String.class));
-        Preconditions.checkNotNull(cepEncontrado, "Nenhum endereço encontrado para o cep informado. ");
-		return montarEndereco(cepEncontrado);
+	private boolean validarCEP(String cep) {
+	    return cep.matches("\\d{5}-\\d{3}");
 	}
-	
-	private Endereco montarEndereco(JSONObject json) {
-		Endereco endereco = new Endereco();
-        endereco.setBairro(json.getString("bairro"));
-        endereco.setCep(json.getString("cep"));
-        endereco.setCidade(json.getString("localidade"));
-        endereco.setEstado(json.getString("uf"));
-        return endereco;
-	}
-	
 }

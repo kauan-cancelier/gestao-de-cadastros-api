@@ -16,7 +16,7 @@ public class UsuarioServiceProxy implements UsuarioService {
 	
 	@Autowired
 	@Qualifier("usuarioServiceImpl")
-	UsuarioService service;
+	private	UsuarioService service;
 
 	@Override
 	public Usuario salvar(Usuario usuario) {

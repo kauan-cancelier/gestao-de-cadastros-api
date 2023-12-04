@@ -28,8 +28,6 @@ public class ApiSecurityConfig {
 	
 	private final String ADMINISTRADOR = Role.Administrador.toString();
 	
-	private final String CLIENTE = Role.Cliente.toString();
-	
 	private final String RESTAURANTE = Role.Restaurante.toString();
 	
 	@Autowired
@@ -68,29 +66,41 @@ public class ApiSecurityConfig {
 		return ccs;
 	}
 	
-	@Bean
 	
+	@SuppressWarnings("removal")
+	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception { 
 		http.csrf(csrf -> csrf.disable())
 		.csrf(csrf -> csrf.disable())
 		 .cors()
-        .configurationSource(urlBasedCorsConfigurationSource()) // Use the cors configuration here
+        .configurationSource(urlBasedCorsConfigurationSource())
         .and()
 		.authorizeHttpRequests(
+				
+				//auth
 				request -> request.requestMatchers("/auth/**")
-				.permitAll()
+					.permitAll()
+					
+				//usuarios
 				.requestMatchers(HttpMethod.POST, "/usuarios")
 					.permitAll()
 				.requestMatchers("/usuarios/**")
 					.hasAnyAuthority(ADMINISTRADOR, RESTAURANTE)
+					
+				//clientes
 				.requestMatchers("/clientes/**")
 					.hasAnyAuthority(ADMINISTRADOR, RESTAURANTE)
+					
+				//enderecos
 				.requestMatchers("/enderecos/**")
 					.hasAnyAuthority(ADMINISTRADOR, RESTAURANTE)
+					
+				//cupons
+				.requestMatchers(HttpMethod.GET,"/cupons/**")
+					.permitAll()
 				.requestMatchers("/cupons/**")
-					.hasAnyAuthority(ADMINISTRADOR, CLIENTE, RESTAURANTE)
-				.requestMatchers("/integracoes/**")
 					.hasAnyAuthority(ADMINISTRADOR, RESTAURANTE)
+				
 				.anyRequest().authenticated())
 		.sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 		.authenticationProvider(authenticationProvider()).addFilterBefore(filtroDeAutenticacaoJwt,

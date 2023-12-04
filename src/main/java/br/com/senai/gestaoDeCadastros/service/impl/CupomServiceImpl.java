@@ -16,11 +16,16 @@ import br.com.senai.gestaoDeCadastros.service.CupomService;
 public class CupomServiceImpl implements CupomService {
 	
 	@Autowired
-	CuponsRepository cuponsRepository;
+	private CuponsRepository cuponsRepository;
 
 	@Override
 	public Cupom salvar(Cupom cupom) {
 		Preconditions.checkNotNull(cupom, "O cupom é obrigatório para salvar. ");
+		if (cupom.getId() != null) {
+			Cupom cupomEncontrado = cuponsRepository.buscarPor(cupom.getId());
+	        Preconditions.checkNotNull(cupomEncontrado, "Nenhum cupom encontrado com esse ID.");
+	        Preconditions.checkArgument(cupomEncontrado.getStatus() == Status.A, "O cupom encontrado está inativo.");
+	    }
 		return cuponsRepository.save(cupom);
 	}
 
@@ -41,6 +46,7 @@ public class CupomServiceImpl implements CupomService {
 
 	@Override
 	public Page<Cupom> listarTodos(Pageable pagina) {
+		Preconditions.checkNotNull(pagina, "A pagina é obrigatória. ");
 		return cuponsRepository.listarTodos(pagina);
 	}
 

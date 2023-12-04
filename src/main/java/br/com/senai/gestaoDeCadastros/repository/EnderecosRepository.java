@@ -21,12 +21,14 @@ public interface EnderecosRepository extends JpaRepository<Endereco, Integer>{
 			@NotNull(message = "O id é obrigatório para busca. ")
 			Integer id);
 	
-	@Query("SELECT e FROM Endereco e WHERE e.cliente.id = :idDoCliente")
+	@Query("SELECT e "
+			+ "FROM Endereco e "
+			+ "WHERE e.cliente.id = :idDoCliente")
 	public Page<Endereco> listarPor(Integer idDoCliente, Pageable pagina);
 
 	@Query(value = "SELECT e FROM Endereco e "
 			+ "JOIN FETCH e.cliente "
-			+ "WHERE e.cliente = :cliente ")
+			+ "WHERE e.cliente = :cliente")
 	public Page<Endereco> listarPor(
 			@NotNull(message = "O cliente é obrigatório para listagem. ")
 			Cliente cliente, Pageable pagina);

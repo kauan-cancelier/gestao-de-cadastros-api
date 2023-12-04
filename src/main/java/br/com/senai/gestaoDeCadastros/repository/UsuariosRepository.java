@@ -16,24 +16,34 @@ import jakarta.validation.constraints.NotNull;
 @Repository
 public interface UsuariosRepository extends JpaRepository<Usuario, Integer>{
 	
-	@Query(value = "SELECT u FROM Usuario u WHERE u.role = :role")
+	@Query(value = "SELECT u "
+			+ "FROM Usuario u "
+			+ "WHERE u.role = :role "
+			+ "AND u.status = A "
+			+ "ORDER BY u.email")
 	public Page<Usuario> listarPor(
 			@NotNull(message = "O papel do usuário é obrigatório para listagem. ")
 			Role role,
 			Pageable pageable);
 	
-	@Query(value = "SELECT u FROM Usuario u WHERE u.email = :email")
+	@Query(value = "SELECT u FROM "
+			+ "Usuario u "
+			+ "WHERE u.email = :email")
 	public Usuario buscarPor(
 			@NotBlank(message = "O endereço de email é obrigatório para busca. ")
 			String email);
 
-	@Query(value = "SELECT u FROM Usuario u WHERE u.id = :id")
+	@Query(value = "SELECT u "
+			+ "FROM Usuario u "
+			+ "WHERE u.id = :id")
 	public Usuario buscarPor(
 			@NotBlank(message = "O id é obrigatório para busca. ")
 			Integer id);
 	
 	@Modifying
-	@Query("UPDATE Usuario u SET u.status = :status WHERE u.id = :id")
+	@Query("UPDATE Usuario u "
+			+ "SET u.status = :status "
+			+ "WHERE u.id = :id")
 	public void alterarStatusPor(
 			@NotNull(message = "O id é obrigatório. ")
 			Integer id,

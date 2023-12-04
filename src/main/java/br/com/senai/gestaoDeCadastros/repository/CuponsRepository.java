@@ -14,7 +14,9 @@ import jakarta.validation.constraints.NotNull;
 @Repository
 public interface CuponsRepository extends JpaRepository<Cupom, Integer> {
 	
-	@Query(value = "SELECT c FROM Cupom c WHERE c.id = :id")
+	@Query(value = "SELECT c "
+			+ "FROM Cupom c "
+			+ "WHERE c.id = :id")
 	public Cupom buscarPor(
 			@NotNull(message = "O id é obrigatório para busca. ")
 			Integer id);
@@ -23,7 +25,9 @@ public interface CuponsRepository extends JpaRepository<Cupom, Integer> {
 	public Page<Cupom> listarTodos(Pageable pagina);
 	
 	@Modifying
-	@Query("UPDATE Cupom c SET c.status = :status WHERE c.id = :id")
+	@Query("UPDATE Cupom c "
+			+ "SET c.status = :status "
+			+ "WHERE c.id = :id")
 	public void alterarStatusPor(
 			@NotNull(message = "O id é obrigatório. ")
 			Integer id,

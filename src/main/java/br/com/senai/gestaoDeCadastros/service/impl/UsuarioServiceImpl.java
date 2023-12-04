@@ -20,24 +20,39 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Autowired
 	private UsuariosRepository repository;
 	
-	//TODO 
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 	@Override
 	public Usuario salvar(Usuario usuario) {
-	    Preconditions.checkNotNull(usuario, "O usuário é obrigatório para salvar. ");
+	    Preconditions.checkNotNull(usuario, "O objeto de usuário não pode ser nulo.");
+
 	    if (usuario.getId() != null) {
-	        Preconditions.checkNotNull(repository.buscarPor(usuario.getId()), "Nenhum usuário encontrado com esse id. ");
+	        Usuario usuarioEncontrado = repository.buscarPor(usuario.getId());
+	        Preconditions.checkNotNull(usuarioEncontrado, "Nenhum usuário encontrado com esse ID.");
+	        Preconditions.checkArgument(usuarioEncontrado.getStatus() == Status.A, "O usuário encontrado está inativo.");
 	    }
+
+	    Usuario usuarioExistente = repository.buscarPor(usuario.getEmail());
+	    Preconditions.checkState(usuarioExistente == null || usuarioExistente.getId().equals(usuario.getId()),
+	            "O e-mail já está em uso por outro usuário.");
+
 	    usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
-	    usuario.setStatus(Status.A);
+
+	    if (usuario.getId() == null) {
+	        usuario.setStatus(Status.A);
+	    }
+
 	    return repository.save(usuario);
 	}
+
 
 	@Override
 	public Usuario removerPor(Integer id) {
 		Preconditions.checkNotNull(id, "O id deve ser informado para exclusão. ");
-		Usuario usuarioEncontrado = this.buscarPor(id);
+		Usuario usuarioEncontrado = repository.buscarPor(id);
+		Preconditions.checkNotNull(usuarioEncontrado, "Não foi encontrado nenhum usuário para o id informado.");
+		Preconditions.checkArgument(usuarioEncontrado.getStatus() == Status.I,
+				"O usuário informado está ativo. Somente um usuário inativo pode ser removido. ");
 		repository.delete(usuarioEncontrado);
 		return usuarioEncontrado;
 	}
@@ -50,7 +65,11 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	@Override
 	public Usuario buscarPor(String email) {
-		return repository.buscarPor(email);
+		Preconditions.checkArgument(!email.isBlank(), "O email é obrigatório para busca. ");
+		Usuario usuarioEncontrado = repository.buscarPor(email);
+		Preconditions.checkNotNull(usuarioEncontrado, "Não foi encontrado nenhum usuário para o id informado. ");
+		Preconditions.checkArgument(usuarioEncontrado.getStatus() == Status.A, "O usuário encontrado está inativo.");
+		return usuarioEncontrado;
 	}
 
 	@Override
@@ -58,6 +77,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 		Preconditions.checkNotNull(id, "O id é obrigatório para busca. ");
 		Usuario usuarioEncontrado = repository.buscarPor(id);
 		Preconditions.checkNotNull(usuarioEncontrado, "Não foi encontrado nenhum usuário para o id informado. ");
+		Preconditions.checkArgument(usuarioEncontrado.getStatus() == Status.A, "O usuário encontrado está inativo.");
 		return usuarioEncontrado;
 	}
 
@@ -65,7 +85,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 	public void alterarStatusPor(Integer id, Status status) {
 		Preconditions.checkNotNull(id, "O id é obrigatório. ");
 		Preconditions.checkNotNull(status, "O status é obrigatório. ");
-		Usuario usuarioParaAlteracao = buscarPor(id);
+		Usuario usuarioParaAlteracao = repository.buscarPor(id);
+		Preconditions.checkNotNull(usuarioParaAlteracao, "Não foi encontrado nenhum usuário para o id informado.");
 		Preconditions.checkArgument(usuarioParaAlteracao.getStatus() != status, "O status já foi salvo anteriormente. ");
 		repository.alterarStatusPor(id, status);
 	}

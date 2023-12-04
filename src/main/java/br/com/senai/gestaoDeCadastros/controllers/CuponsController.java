@@ -98,8 +98,8 @@ public class CuponsController {
 
 	private Map<String, Object> converter(Cupom cupom) {
 		Map<String, Object> cupomMap = new HashMap<String, Object>();
-		cupomMap.put("id_cupom", cupom.getId());
-		cupomMap.put("percentual_de_desconto", cupom.getPercentualDeDesconto());
+		cupomMap.put("id", cupom.getId());
+		cupomMap.put("percentualDeDesconto", cupom.getPercentualDeDesconto());
 		cupomMap.put("codigo", cupom.getCodigo());
 		cupomMap.put("validade", cupom.getValidade());
 		cupomMap.put("status", cupom.getStatus());

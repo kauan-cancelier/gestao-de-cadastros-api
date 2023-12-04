@@ -37,14 +37,11 @@ import jakarta.transaction.Transactional;
 public class UsuariosController {
 	
 	@Autowired
-	private MapConverter converter;
-	
-	@Autowired
 	@Qualifier("usuarioServiceProxy")
-	UsuarioService usuarioService;
+	private UsuarioService usuarioService;
 	
 	@Autowired
-	ControllerHelper helper;
+	private ControllerHelper helper;
 	
 	@GetMapping("/id/{id}")
 	public ResponseEntity<?> buscarPor(@PathVariable("id") Integer id) {
@@ -61,6 +58,7 @@ public class UsuariosController {
 	        usuarioMapItens.put("id", usuario.getId());
 	        usuarioMapItens.put("email", usuario.getEmail());
 	        usuarioMapItens.put("role", usuario.getRole());
+	        usuarioMapItens.put("status", usuario.getStatus());
 	        usuariosList.add(usuarioMapItens);
 	    }
 
@@ -81,13 +79,13 @@ public class UsuariosController {
 	@Transactional
 	@DeleteMapping("/id/{id}")
 	public ResponseEntity<?> excluirPor(@PathVariable("id") Integer id) {
-		return ResponseEntity.ok(converter.toJsonMap(usuarioService.removerPor(id)));
+		return ResponseEntity.ok(converteDto(usuarioService.removerPor(id)));
 	}
 	
 	@PutMapping
 	public ResponseEntity<?> alterar(@RequestBody Usuario usuario) {
-		Preconditions.checkArgument(usuario.isPersistido(), "O usuario deve possuir id para alteração");
-		return ResponseEntity.ok(converter.toJsonMap(usuarioService.salvar(usuario)));
+		Preconditions.checkArgument(usuario.isPersistido(), "O usuario deve possuir id para alteração. ");
+		return ResponseEntity.ok(converteDto(usuarioService.salvar(usuario)));
 	}
 	
 	@Transactional
@@ -105,6 +103,7 @@ public class UsuariosController {
 		dto.setEmail(usuario.getEmail());
 		dto.setId(usuario.getId());
 		dto.setRole(usuario.getRole());
+		dto.setStatus(usuario.getStatus());
 		return dto;
 	}
 	

@@ -1,6 +1,7 @@
 package br.com.senai.gestaoDeCadastros.dto;
 
 import br.com.senai.gestaoDeCadastros.entity.enums.Role;
+import br.com.senai.gestaoDeCadastros.entity.enums.Status;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
@@ -21,5 +22,9 @@ public class UsuarioDto {
 	@Enumerated(EnumType.STRING)
 	@NotNull(message = "O papel do usuário é obrigatório. ")
 	private Role role;
+	
+	@Enumerated(EnumType.STRING)
+	@NotNull(message = "O Status do usuário é obrigatório. ")
+	private Status status;
 
 }
