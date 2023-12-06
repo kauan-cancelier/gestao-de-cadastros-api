@@ -33,9 +33,12 @@ public class UsuarioServiceImpl implements UsuarioService {
 	    }
 
 	    Usuario usuarioExistente = repository.buscarPor(usuario.getEmail());
-	    Preconditions.checkState(usuarioExistente == null || usuarioExistente.getId().equals(usuario.getId()),
-	            "O e-mail já está em uso por outro usuário.");
+	    
+	    if (usuarioExistente != null && !usuarioExistente.getId().equals(usuario.getId())) {
+	        throw new IllegalStateException("O e-mail já está em uso por outro usuário.");
+	    }
 
+		Preconditions.checkArgument(!usuario.getSenha().isBlank() && usuario.getSenha().length() >= 3, "A senha deve ter mais do que 3 caracteres, e é obrigatória.");
 	    usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
 
 	    if (usuario.getId() == null) {

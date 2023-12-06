@@ -29,7 +29,7 @@ public class ClientesController {
 	
 	@Autowired
 	@Qualifier("clienteServiceProxy")
-	ClienteService clienteService;
+	private ClienteService clienteService;
 	
 	@GetMapping("/id/{id}")
 	public ResponseEntity<?> buscarPor(@PathVariable("id") Integer id) {
@@ -39,7 +39,6 @@ public class ClientesController {
 	@PostMapping
 	public ResponseEntity<?> inserir(@RequestBody Cliente cliente) {
 		Preconditions.checkArgument(!cliente.isPersistido(), "O cliente não pode possuir id para inserção");
-		System.out.println(cliente);
 		clienteService.salvar(cliente);
 		return ResponseEntity.created(URI.create("/clientes/id/" + cliente.getId())).build();
 	}

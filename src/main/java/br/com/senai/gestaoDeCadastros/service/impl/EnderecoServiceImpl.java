@@ -47,6 +47,6 @@ public class EnderecoServiceImpl implements EnderecoService {
 	}
 	
 	private boolean validarCEP(String cep) {
-	    return cep.matches("\\d{5}-\\d{3}");
+	    return cep.matches("\\\\d{5}-\\\\d{3}");
 	}
 }

@@ -38,7 +38,7 @@ public class Cliente {
 	
 	@Column(name = "nome")
 	@NotBlank(message = "O nome é obrigatório. ")
-	private String nome;
+	private String nome;	
 	
 	@Column(name = "sexo")
 	@Enumerated(EnumType.STRING)
